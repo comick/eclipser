@@ -69,7 +69,8 @@ public class ConfigurationBuilder {
         }
 
         if (EclipserXml.CONFIGURATION_TYPE_LOCAL_JAVA_APPLICATION.equalsIgnoreCase(configurationType) ||
-                EclipserXml.CONFIGURATION_TYPE_PROGRAM_LAUNCH.equalsIgnoreCase(configurationType)) {
+                EclipserXml.CONFIGURATION_TYPE_PROGRAM_LAUNCH.equalsIgnoreCase(configurationType) ||
+                EclipserXml.CONFIGURATION_TYPE_JAVA_APPLET.equalsIgnoreCase(configurationType)) {
             name = psiFile.getVirtualFile().getNameWithoutExtension();
         }
 
@@ -79,6 +80,8 @@ public class ConfigurationBuilder {
 	private Configuration createConfiguration(String configurationType) throws EclipserException {
 		if (EclipserXml.CONFIGURATION_TYPE_LOCAL_JAVA_APPLICATION.equalsIgnoreCase(configurationType)) {
 			return new JavaConfiguration(name, mainType, moduleName, vmParameters, programArguments);
+        } else if (EclipserXml.CONFIGURATION_TYPE_JAVA_APPLET.equals(configurationType)) {
+            return new JavaAppletConfiguration(name, mainType, moduleName, vmParameters, programArguments);
 		} else if (EclipserXml.CONFIGURATION_TYPE_PROGRAM_LAUNCH.equalsIgnoreCase(configurationType)) {
 			return new ExternalToolConfiguration(name, program, parameters, workingDirectory);
 		} else {
